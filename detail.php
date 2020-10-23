@@ -18,7 +18,7 @@ $preference->back_urls = array(
     "pending" => $siteurl."/pending.php"
 );
 $preference->auto_return = "approved";
-$preference->id = "Pagar la compra";
+//$preference->id = "Pagar la compra";
 
 $preference->payment_methods = array(
   "excluded_payment_methods" => array(
