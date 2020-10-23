@@ -1,16 +1,60 @@
 <?php
+
+$siteurl = $_SERVER['SERVER_NAME'];
+
 require __DIR__ .  '/vendor/autoload.php';
 // Agrega credenciales
 MercadoPago\SDK::setAccessToken('APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398');
 
+MercadoPago\SDK::setIntegratorId("dev_24c65fb163bf11ea96500242ac130004");
+
 // Crea un objeto de preferencia
 $preference = new MercadoPago\Preference();
 
+$preference->back_urls = array(
+    "success" => $siteurl."/success.php",
+    "failure" => $siteurl."/failure.php",
+    "pending" => $siteurl."/pending.php"
+);
+$preference->auto_return = "approved";
+$preference->id = "Pagar la compra";
+
+$preference->payment_methods = array(
+  "excluded_payment_methods" => array(
+    array("id" => "amex")
+  ),
+  "excluded_payment_types" => array(
+    array("id" => "atm")
+  ),
+  "installments" => 6
+);
+
+$payer = new MercadoPago\Payer();
+$payer->name = "Lalo";
+$payer->surname = "Landa";
+$payer->email = "test_user_63274575@testuser.com";
+$payer->phone = array(
+"area_code" => "11",
+"number" => "22223333"
+);
+
+$payer->address = array(
+"street_name" => "False",
+"street_number" => 123,
+"zip_code" => "1111"
+);
+
 // Crea un ítem en la preferencia
 $item = new MercadoPago\Item();
-$item->title = 'Mi producto';
+$item->id = "1234";
+$item->title = $_POST['title'];
+$item->description = "Dispositivo móvil de Tienda e-commerce";
 $item->quantity = 1;
-$item->unit_price = 75.56;
+$item->unit_price = $_POST['price'];
+$item->picture_url = $siteurl.$_POST['img'];
+
+$preference->external_reference = "flaforti@gmail.com";
+
 $preference->items = array($item);
 $preference->save();
 
@@ -29,6 +73,8 @@ $preference->save();
     src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
     crossorigin="anonymous"></script>
+
+	<script src="https://www.mercadopago.com/v2/security.js" view="home"></script>
 
     <link rel="stylesheet" href="./assets/category-landing.css" media="screen, print">
 
@@ -152,7 +198,7 @@ $preference->save();
   src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
   data-preference-id="<?php echo $preference->id; ?>">
 </script>                                    
-                                    <button type="submit" class="mercadopago-button" formmethod="post">Pagar</button>
+                                    <button type="submit" class="mercadopago-button" formmethod="post">Pagar MP</button>
                                 </div>
                             </div>
                         </div>
