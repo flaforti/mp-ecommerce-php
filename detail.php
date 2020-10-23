@@ -30,20 +30,20 @@ $preference->payment_methods = array(
   "installments" => 6
 );
 
-$payer = new MercadoPago\Payer();
-$payer->name = "Lalo";
-$payer->surname = "Landa";
-$payer->email = "test_user_63274575@testuser.com";
-$payer->phone = array(
-"area_code" => "11",
-"number" => "22223333"
-);
+// $payer = new MercadoPago\Payer();
+// $payer->name = "Lalo";
+// $payer->surname = "Landa";
+// $payer->email = "test_user_63274575@testuser.com";
+// $payer->phone = array(
+// "area_code" => "11",
+// "number" => "22223333"
+// );
 
-$payer->address = array(
-"street_name" => "False",
-"street_number" => 123,
-"zip_code" => "1111"
-);
+// $payer->address = array(
+// "street_name" => "False",
+// "street_number" => 123,
+// "zip_code" => "1111"
+// );
 
 // Crea un ítem en la preferencia
 $item = new MercadoPago\Item();
@@ -195,9 +195,7 @@ $preference->save();
                                             <?php echo "$" . $_POST['unit'] ?>
                                         </h3>
                                     </div>
-    <a href="<?php echo $preference->init_point; ?>">Pagar la compra</a>
-                                 
-                                    <button type="submit" class="mercadopago-button" formmethod="post">Pagar MP</button>
+    								<a href="<?php echo $preference->init_point; ?>" class="mercadopago-button">Pagar la compra</a>                                 
                                 </div>
                             </div>
                         </div>
